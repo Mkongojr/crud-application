@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build crud.cpp",
+      "type": "shell",
+      "command": "/usr/bin/g++", // or "g++" on Windows if MinGW is installed
+      "args": ["-g", "crud.cpp", "-o", "crud.out"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Generated task to build cpp file"
+    }
+  ]
+}
