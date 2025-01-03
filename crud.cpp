@@ -41,16 +41,22 @@ int main()
         {
         case 1:
             createProduct();
+            break;
         case 2:
             readProduct();
+            break;
         case 3:
             updateProduct();
+            break;
         case 4:
             deleteProduct();
+            break;
         case 5:
             cout << "exiting....\n";
+            break;
         default:
             cout << "invalid choice!!try again\n";
+            break;
         }
     } while (choice != 5);
     return 0;
@@ -61,7 +67,9 @@ void createProduct()
     product p;
     cout << "enter product id: ";
     cin >> p.id;
+    cin.ignore();
     cout << "enter product name: ";
+    getline(cin, p.name);
     cin >> p.name;
     cout << "enter product price: ";
     cin >> p.price;
@@ -86,21 +94,55 @@ void readProducts()
         }
     }
 }
-//update an existing product
-void upgradeProduct(){
-    vector<product>products=loadProducts();
+// update an existing product
+void updateProduct()
+{
+    vector<product> products = loadProducts();
     int id;
-    bool found=false;
-    cout<<"enter product ID to update:";
+    bool found = false;
+    cout << "enter product ID to update:";
     cin >> id;
 
-    for(auto&pr:products){
-        if(pr.id==id){
-            cout << "enter new product name:";
-            cin>>pr.name;
-            cout << "enter the new product price:";
-            cin>>pr.price;
+    for (auto &pr : products)
+    {
+        if (pr.id == id)
+        {
             found = true;
+            cin.ignore();
+            cout << "enter the new product name:";
+            getline(cin, pr.name);
+            cout << "enter the new product price:";
+            cin >> pr.price;
+            saveProducts(products);
+            cout << "product updated successfully\n";
+            break;
         }
     }
+    if (!found)
+    {
+        cout << "product with ID" << id << "not found\n";
+    }
 }
+void deleteProduct()
+{
+    vector<product> products = loadProducts();
+    int id;
+    bool found = false;
+    cout << "enter product ID to delete:";
+    cin >> id;
+    for (auto it = products.begin(); it !=products.end(); it++)
+    {
+        if (it -> id == id)
+        {
+            found = true;
+            products.erase(it);
+            saveProducts(products);
+            cout << "product deleted successfully\n";
+            break;
+        }
+    }
+    if (!found){
+        cout << "product with Id" << id << "not found\n";
+    }
+}
+//load products from file
