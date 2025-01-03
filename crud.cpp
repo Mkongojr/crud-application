@@ -146,3 +146,32 @@ void deleteProduct()
     }
 }
 //load products from file
+vector<product> loadProducts(){
+    vector<product> products;
+    ifstream file(filename);
+
+    if(file.is_open()){
+        product p;
+        while(file>>p.id){
+            file.ignore();
+            getline(file, p.name);
+            file >> p.price;
+            file.ignore();
+            products.push_back(p);
+        }
+        file.close();
+    }
+    return products;
+}
+//save products to file
+void saveProducts(const vector<product>& products) {
+    ofstream file(filename, ios::trunc);
+    if (file.is_open()) {
+        for (const auto& p : products) {
+            file << p.id << "\n" << p.name << "\n" << p.price << "\n";
+        }
+    }
+    file.close();
+}
+
+
