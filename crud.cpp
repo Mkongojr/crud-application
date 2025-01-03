@@ -12,7 +12,7 @@ struct product
     double price;
 
     // display product details
-    void display()
+    void display() const
     {
         cout << "ID:" << id << "\nname:" << name << "\nprice:" << price << "\n\n";
     }
@@ -59,12 +59,11 @@ void createProduct()
 {
     vector<product> products = loadProducts();
     product p;
-    cout << "enter product id:";
+    cout << "enter product id: ";
     cin >> p.id;
-    cin.ignore();
-    cout << "enter the product name:";
+    cout << "enter product name: ";
     cin >> p.name;
-    cout << "enter the product price:";
+    cout << "enter product price: ";
     cin >> p.price;
     products.push_back(p);
     saveProducts(products);
@@ -81,9 +80,27 @@ void readProducts()
     else
     {
         cout << "...products list\n";
-        for (const auto &p : products)
+        for (const auto &pr : products)
         {
-            p.display();
+            pr.display();
+        }
+    }
+}
+//update an existing product
+void upgradeProduct(){
+    vector<product>products=loadProducts();
+    int id;
+    bool found=false;
+    cout<<"enter product ID to update:";
+    cin >> id;
+
+    for(auto&pr:products){
+        if(pr.id==id){
+            cout << "enter new product name:";
+            cin>>pr.name;
+            cout << "enter the new product price:";
+            cin>>pr.price;
+            found = true;
         }
     }
 }
